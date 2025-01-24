@@ -308,4 +308,254 @@ int tongtach(int n)
 }
 ```
 
-## 22. 
+## 22. Đếm số lượng số 0 tận cùng của N
+```cpp
+int dem0(int n)
+{
+	int count = 0;
+	for(int i = 5; n / i >= 1; i *= 5)
+		count += n/i;
+	return count;
+}
+```
+
+## 23. Lũy thừa nhị phân a mũ b
+```cpp
+const long long mod = 1e9 + 7;
+long long pow(long long a, long long b)
+{
+	long long s = 1;
+	if(b == 0)
+		return s;
+	while(b)
+	{
+		if(b%2 == 1)
+		{
+			s = (s%mod * a%mod) %mod;
+		}
+		a = (a%mod * a%mod) %mod;
+		b = b / 2;
+	}
+	return s;
+}
+```
+
+## 23. Lũy thừa nhị phân a mũ b mũ c
+```cpp
+const long long mmod = 1e9 + 7;
+
+long long pow(long long a, long long b, long long mod)
+{
+	long long s = 1;
+	if(b == 0)
+		return s;
+	while(b)
+	{
+		if(b%2 == 1)
+		{
+			s = (s%mod * a%mod) %mod;
+		}
+		a = (a%mod * a%mod) %mod;
+		b = b / 2;
+	}
+	return s;
+}
+
+int main()
+{
+    int a, b, c; cin >> a >> b >> c;
+    cout << pow(a%mmod, pow(b%mmod, c, mmod - 1), mmod) << endl;
+}
+```
+
+## 24. Kiểm tra N có là số chính phương hay không
+```cpp
+bool uocphu (const int &n)
+{
+	for(int i = 2; i <= sqrt(n); i++)
+	{
+		if(n%i == 0)
+		{
+			if(i != sqrt(n))
+				return true;
+		}
+	}
+	return false;
+}
+
+int main()
+{
+    int n; cin >> n;
+    if(sqrt(n) == int(sqrt(n)) and uocphu(n) == false) cout << "True";
+}
+```
+
+## 25. Đếm số ước nguyên tố của N
+```cpp
+int demnto(int n)
+{
+    int dem = 0;
+    for(int i = 2; i <= sqrt(n); i++)
+    {
+        if(n%i == 0)
+        {
+            dem++;
+        }
+    }
+    return dem
+}
+```
+
+## 26. Phân tích N thành thừa số nguyên tố
+```cpp
+int findnt(int n, int nto)
+{
+	bool check = true;
+	for(int i = nto + 1; i <= n; i++)
+	{
+		for(int j = 2; j <= sqrt(i); j++)
+		{
+			if(i%j == 0)
+				check = false;
+		}
+		if(check == false)
+			check = true;
+		else
+			return i;
+	}
+}
+
+int main()
+{
+	int n; cin >> n; int nto = 2; int mu = 0;
+	while(n != 1)
+	{
+		mu = 0;
+		
+		while(n%nto == 0)
+		{
+			mu++;
+			n = n/nto;
+		}
+		if(mu != 0)
+		{
+			cout << nto << "^" << mu;
+			if(n != 1)
+				cout << " * ";
+		}
+		nto = findnt(n, nto);
+	}
+}
+```
+
+## 27. Tổng các giai thừa từ 1 đến N
+```cpp
+int cs()
+{
+    int n; cin >> n; long long gt = 1; long long tong = 1;
+    for (int i = 2; i <= n; i++)
+    {
+        gt = gt*i;
+        tong = tong + gt;
+    }
+    return tong
+}
+```
+
+## 28. Kiểm tra N có là số hoàn hảo hay không (Phi hàm Euler)
+```cpp
+bool nto(long long n)
+{
+    for(long long i = 2; i < sqrt(n); i++)
+    {
+        if(n%i == 0) return false;
+    }
+    return true;
+}
+
+bool hoanhao(long long n)
+{
+    for(long long i = 2; i <= 32; i++)
+    {
+        if(nto(i))
+        {
+            long long t = pow(2, i - 1), t2 = (t*2) - 1;
+            if(nto(t2) && n == t*t2) return true;
+        }
+    }
+    return false;
+}
+```
+
+## 29. Tính số ước các số từ 1 đến N
+```cpp
+vector<int> demuoc()
+{
+    vector<int>a(n, 1);
+    for(int i = 2; i <= n; i++)
+    {
+        for(int j = i; j < n; j += i)
+        {
+            a[j]++;
+        }
+    }
+}
+```
+
+## 30. Tìm K sao cho tổng từ 1 tới K nhỏ hơn hoặc bằng N
+```cpp
+void cs()
+{
+    long long n; cin >> n; 
+    long long k = sqrt(2*n);
+    if(k*(k + 1) <= 2*n)
+    {
+        cout << k;
+    }
+    else
+    {
+        cout << k - 1;
+    }
+}
+```
+
+## 31. Tìm số nguyên dương L nhỏ nhất sao cho tất cả các dãy con gồm L phần tử liên tiếp của dãy A đều có tổng lớn hơn hoặc bằng M.
+```cpp
+int main()
+{
+    long long n, k; cin >> n >> k; vector<long long>a(n);
+    for(int i = 0; i < n; i++) cin >> a[i];
+    long long r = 0, l = 0, sum = 0, mx = -1;
+    for(r = 0; r < n; r++)
+    {
+        sum += a[r];
+        while(sum >= k)
+        {
+            mx = max(mx, r - l + 1);
+            sum -= a[l];
+            l++;
+        }
+    } 
+    while(sum < k and mx != -1)
+    {
+        l--;
+        sum += a[l];
+        mx = max(mx, r - l);
+    }
+    cout << mx;
+}
+```
+
+## 32. SÀNG SỐ NGUYÊN TỐ TRÊN ĐOẠN TỪ L ĐẾN N
+
+```cpp
+vector<int> sang(long long n, long long l)
+{
+    vector<int>a(n - l + 1, 1);
+    for(long long i = 2; i <= sqrt(n); i++)
+    {
+        for(long long j = max((i * i), ((l + i - 1)/(i * i))); j <= n; j += i) a[j - l] = 0;
+    }
+    return a;
+}
+```
