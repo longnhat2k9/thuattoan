@@ -546,7 +546,23 @@ int main()
 }
 ```
 
-## 32. SÀNG SỐ NGUYÊN TỐ TRÊN ĐOẠN TỪ L ĐẾN N
+## 32. Sàng số nguyên tố các số từ 1 đến N
+```cpp
+vector<int>sang(int n)
+{
+    vector<int>a(n + 1, 1); a[0] = a[1] = 0;
+    for(int i = 2; i <= sqrt(n); i++)
+    {
+        if(a[i] == 0)
+        {
+            for(int j = i * i; j <= n; j += i) a[j] = 0;
+        }
+    }
+    return a;
+}
+```
+
+## 33. Sàng số nguyên tố trên đoạn từ L đến N
 
 ```cpp
 vector<int> sang(long long n, long long l)
