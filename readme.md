@@ -575,3 +575,33 @@ vector<int> sang(long long n, long long l)
     return a;
 }
 ```
+
+## 34. Đếm phân phối
+```cpp
+const int m = 1e6;
+
+vector<int> dpp()
+{
+	vector<int>a(m, 0);
+	for(int i = 0; i < n; i++)
+	{
+		int x; cin >> x;
+		a[x]++;
+	}
+	return a;
+}
+```
+
+## 35. Mảng cộng dồn (Prefix Sum)
+```cpp
+vector<int> prf()
+{
+	int n; cin >> n;
+	vector<int>a(n); cin >> a[0];
+	for(int i = 1; i < n; i++)
+	{
+		cin >> a[i];
+		a[i] = a[i] + a[i - 1];
+	}
+	return a;
+}
